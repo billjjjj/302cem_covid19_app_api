@@ -1,18 +1,18 @@
 const httpMocks = require('node-mocks-http');
-const UserModel = require('../../models/user.model');
-const UserController = require('../../controllers/UserController');
+const RuleModel = require('../../models/rule.model');
+const RuleController = require('../../controllers/RuleController');
 
-const userController = new UserController(UserModel);
+const ruleController = new RuleController(RuleModel);
 
-const newUser = require('../mock-data/user/new-user.json');
-const allUser = require('../mock-data/user/all-users.json');
+const newRule = require('../mock-data/rule/new-rule.json');
+const allRule = require('../mock-data/rule/all-rules.json');
 
-jest.mock('../../models/user.model');
+jest.mock('../../models/rule.model');
 
 let req;
 let res;
 let next;
-const userId = '5d5ecb5a6e598605f06cb945';
+const ruleId = '5d5ecb5a6e598605f06cb945';
 
 beforeEach(() => {
   req = httpMocks.createRequest();
@@ -20,158 +20,158 @@ beforeEach(() => {
   next = jest.fn();
 });
 /*
- * Get Users
+ * Get Rules
  */
-describe('userController.getAllEntities', () => {
+describe('ruleController.getAllEntities', () => {
   it('should have a getTodos function', () => {
-    expect(typeof userController.getAllEntities).toBe('function');
+    expect(typeof ruleController.getAllEntities).toBe('function');
   });
-  it('should call UserModel.find({})', async () => {
-    await userController.getAllEntities(req, res, next);
-    expect(UserModel.find).toHaveBeenCalledWith({});
+  it('should call RuleModel.find({})', async () => {
+    await ruleController.getAllEntities(req, res, next);
+    expect(RuleModel.find).toHaveBeenCalledWith({});
   });
   it('should return response with status 200 and all todos', async () => {
-    UserModel.find.mockReturnValue(allUser);
-    await userController.getAllEntities(req, res, next);
+    RuleModel.find.mockReturnValue(allRule);
+    await ruleController.getAllEntities(req, res, next);
     expect(res.statusCode).toBe(200);
     expect(res._isEndCalled()).toBeTruthy();
-    expect(res._getJSONData()).toStrictEqual(allUser);
+    expect(res._getJSONData()).toStrictEqual(allRule);
   });
   it('should handle errors in getAllEntities', async () => {
     const errorMessage = { message: 'Error finding' };
     const rejectedPromise = Promise.reject(errorMessage);
-    UserModel.find.mockReturnValue(rejectedPromise);
-    await userController.getAllEntities(req, res, next);
+    RuleModel.find.mockReturnValue(rejectedPromise);
+    await ruleController.getAllEntities(req, res, next);
     expect(next).toHaveBeenCalledWith(errorMessage);
   });
 });
 
-describe('userController.getEntityById', () => {
+describe('ruleController.getEntityById', () => {
   it('should have a.getEntityById', () => {
-    expect(typeof userController.getEntityById).toBe('function');
+    expect(typeof ruleController.getEntityById).toBe('function');
   });
-  it('should call UserModel.findById with route parameters', async () => {
-    req.params.id = userId;
-    await userController.getEntityById(req, res, next);
-    expect(UserModel.findById).toBeCalledWith(userId);
+  it('should call RuleModel.findById with route parameters', async () => {
+    req.params.id = ruleId;
+    await ruleController.getEntityById(req, res, next);
+    expect(RuleModel.findById).toBeCalledWith(ruleId);
   });
   it('should return json body and response code 200', async () => {
-    UserModel.findById.mockReturnValue(newUser);
-    await userController.getEntityById(req, res, next);
+    RuleModel.findById.mockReturnValue(newRule);
+    await ruleController.getEntityById(req, res, next);
     expect(res.statusCode).toBe(200);
-    expect(res._getJSONData()).toStrictEqual(newUser);
+    expect(res._getJSONData()).toStrictEqual(newRule);
     expect(res._isEndCalled()).toBeTruthy();
   });
   it('should do error handling', async () => {
-    const errorMessage = { message: 'error finding UserModel' };
+    const errorMessage = { message: 'error finding RuleModel' };
     const rejectedPromise = Promise.reject(errorMessage);
-    UserModel.findById.mockReturnValue(rejectedPromise);
-    await userController.getEntityById(req, res, next);
+    RuleModel.findById.mockReturnValue(rejectedPromise);
+    await ruleController.getEntityById(req, res, next);
     expect(next).toHaveBeenCalledWith(errorMessage);
   });
   it('should return 404 when item doesnt exist', async () => {
-    UserModel.findById.mockReturnValue(null);
-    await userController.getEntityById(req, res, next);
+    RuleModel.findById.mockReturnValue(null);
+    await ruleController.getEntityById(req, res, next);
     expect(res.statusCode).toBe(404);
     expect(res._isEndCalled()).toBeTruthy();
   });
 });
 /*
- * Create User
+ * Create Rule
  */
-describe('userController.createEntity', () => {
+describe('ruleController.createEntity', () => {
   beforeEach(() => {
-    req.body = newUser;
+    req.body = newRule;
   });
 
   it('should have a.createEntity function', () => {
-    expect(typeof userController.createEntity).toBe('function');
+    expect(typeof ruleController.createEntity).toBe('function');
   });
-  it('should call UserModel.create', () => {
-    userController.createEntity(req, res, next);
-    expect(UserModel.create).toBeCalledWith(newUser);
+  it('should call RuleModel.create', () => {
+    ruleController.createEntity(req, res, next);
+    expect(RuleModel.create).toBeCalledWith(newRule);
   });
   it('should return 201 response code', async () => {
-    await userController.createEntity(req, res, next);
+    await ruleController.createEntity(req, res, next);
     expect(res.statusCode).toBe(201);
     expect(res._isEndCalled()).toBeTruthy();
   });
   it('should return json body in response', async () => {
-    UserModel.create.mockReturnValue(newUser);
-    await userController.createEntity(req, res, next);
-    expect(res._getJSONData()).toStrictEqual(newUser);
+    RuleModel.create.mockReturnValue(newRule);
+    await ruleController.createEntity(req, res, next);
+    expect(res._getJSONData()).toStrictEqual(newRule);
   });
   it('should handle errors', async () => {
     const errorMessage = { message: 'Done property missing' };
     const rejectedPromise = Promise.reject(errorMessage);
-    UserModel.create.mockReturnValue(rejectedPromise);
-    await userController.createEntity(req, res, next);
+    RuleModel.create.mockReturnValue(rejectedPromise);
+    await ruleController.createEntity(req, res, next);
     expect(next).toBeCalledWith(errorMessage);
   });
 });
 /*
- * Update User
+ * Update Rule
  */
-describe('userController.updateEntityById', () => {
+describe('ruleController.updateEntityById', () => {
   it('should have a updateEntityById function', () => {
-    expect(typeof userController.updateEntityById).toBe('function');
+    expect(typeof ruleController.updateEntityById).toBe('function');
   });
-  it('should update with UserModel.findByIdAndUpdate', async () => {
-    req.params.id = userId;
-    req.body = newUser;
-    await userController.updateEntityById(req, res, next);
+  it('should update with RuleModel.findByIdAndUpdate', async () => {
+    req.params.id = ruleId;
+    req.body = newRule;
+    await ruleController.updateEntityById(req, res, next);
 
-    expect(UserModel.findByIdAndUpdate).toHaveBeenCalledWith(userId, newUser, {
+    expect(RuleModel.findByIdAndUpdate).toHaveBeenCalledWith(ruleId, newRule, {
       new: true,
       useFindAndModify: false,
     });
   });
   it('should return a response with json data and http code 200', async () => {
-    req.params.id = userId;
-    req.body = newUser;
-    UserModel.findByIdAndUpdate.mockReturnValue(newUser);
-    await userController.updateEntityById(req, res, next);
+    req.params.id = ruleId;
+    req.body = newRule;
+    RuleModel.findByIdAndUpdate.mockReturnValue(newRule);
+    await ruleController.updateEntityById(req, res, next);
     expect(res._isEndCalled()).toBeTruthy();
     expect(res.statusCode).toBe(200);
-    expect(res._getJSONData()).toStrictEqual(newUser);
+    expect(res._getJSONData()).toStrictEqual(newRule);
   });
   it('should handle errors', async () => {
     const errorMessage = { message: 'Error' };
     const rejectedPromise = Promise.reject(errorMessage);
-    UserModel.findByIdAndUpdate.mockReturnValue(rejectedPromise);
-    await userController.updateEntityById(req, res, next);
+    RuleModel.findByIdAndUpdate.mockReturnValue(rejectedPromise);
+    await ruleController.updateEntityById(req, res, next);
     expect(next).toHaveBeenCalledWith(errorMessage);
   });
 });
 /*
- * Delete User
+ * Delete Rule
  */
-describe('userController.deleteEntityById', () => {
+describe('ruleController.deleteEntityById', () => {
   it('should have a deleteEntityById function', () => {
-    expect(typeof userController.deleteEntityById).toBe('function');
+    expect(typeof ruleController.deleteEntityById).toBe('function');
   });
   it('should call findByIdAndDelete', async () => {
-    req.params.id = userId;
-    await userController.deleteEntityById(req, res, next);
-    expect(UserModel.findByIdAndDelete).toBeCalledWith(userId);
+    req.params.id = ruleId;
+    await ruleController.deleteEntityById(req, res, next);
+    expect(RuleModel.findByIdAndDelete).toBeCalledWith(ruleId);
   });
-  it('should return 200 OK and deleted UserModel', async () => {
-    UserModel.findByIdAndDelete.mockReturnValue(newUser);
-    await userController.deleteEntityById(req, res, next);
+  it('should return 200 OK and deleted RuleModel', async () => {
+    RuleModel.findByIdAndDelete.mockReturnValue(newRule);
+    await ruleController.deleteEntityById(req, res, next);
     expect(res.statusCode).toBe(200);
-    expect(res._getJSONData()).toStrictEqual(newUser);
+    expect(res._getJSONData()).toStrictEqual(newRule);
     expect(res._isEndCalled()).toBeTruthy();
   });
   it('should handle errors', async () => {
     const errorMessage = { message: 'Error deleting' };
     const rejectedPromise = Promise.reject(errorMessage);
-    UserModel.findByIdAndDelete.mockReturnValue(rejectedPromise);
-    await userController.deleteEntityById(req, res, next);
+    RuleModel.findByIdAndDelete.mockReturnValue(rejectedPromise);
+    await ruleController.deleteEntityById(req, res, next);
     expect(next).toHaveBeenCalledWith(errorMessage);
   });
   it('should handle 404', async () => {
-    UserModel.findByIdAndDelete.mockReturnValue(null);
-    await userController.deleteEntityById(req, res, next);
+    RuleModel.findByIdAndDelete.mockReturnValue(null);
+    await ruleController.deleteEntityById(req, res, next);
     expect(res.statusCode).toBe(404);
     expect(res._isEndCalled()).toBeTruthy();
   });
@@ -179,15 +179,15 @@ describe('userController.deleteEntityById', () => {
 /*
  * Update Login
  */
-describe('userController.authenticate', () => {
+describe('ruleController.authenticate', () => {
   it('should have an authenticate function', () => {
-    expect(typeof userController.authenticate).toBe('function');
+    expect(typeof ruleController.authenticate).toBe('function');
   });
 
   it('should return 403 OK and invalid email', async () => {
-    UserModel.findOne.mockReturnValue(null);
-    req.body = newUser;
-    await userController.authenticate(req, res, next);
+    RuleModel.findOne.mockReturnValue(null);
+    req.body = newRule;
+    await ruleController.authenticate(req, res, next);
     expect(res.statusCode).toBe(403);
     expect(res._getJSONData()).toStrictEqual({
       status: 'error',
@@ -198,13 +198,13 @@ describe('userController.authenticate', () => {
   });
 
   it('should return 403 OK and invalid password', async () => {
-    UserModel.findOne.mockReturnValue(newUser);
+    RuleModel.findOne.mockReturnValue(newRule);
     req.body = {
-      email: newUser.email,
+      email: newRule.email,
       password: 123,
     };
 
-    await userController.authenticate(req, res, next);
+    await ruleController.authenticate(req, res, next);
     expect(res.statusCode).toBe(403);
     expect(res._getJSONData()).toStrictEqual({
       status: 'error',
@@ -215,10 +215,10 @@ describe('userController.authenticate', () => {
   });
 
   it('should return 403 OK and invalid password', async () => {
-    UserModel.findOne.mockReturnValue(newUser);
-    req.body = newUser;
+    RuleModel.findOne.mockReturnValue(newRule);
+    req.body = newRule;
 
-    await userController.authenticate(req, res, next);
+    await ruleController.authenticate(req, res, next);
     expect(res.statusCode).toBe(200);
     expect(res._getJSONData().token).toBeTruthy();
     expect(res._isEndCalled()).toBeTruthy();
@@ -227,8 +227,8 @@ describe('userController.authenticate', () => {
   it('should handle errors', async () => {
     const errorMessage = { message: 'Error authing' };
     const rejectedPromise = Promise.reject(errorMessage);
-    UserModel.findOne.mockReturnValue(rejectedPromise);
-    await userController.authenticate(req, res, next);
+    RuleModel.findOne.mockReturnValue(rejectedPromise);
+    await ruleController.authenticate(req, res, next);
     expect(next).toHaveBeenCalledWith(errorMessage);
   });
 });
