@@ -8,7 +8,6 @@ const RuleSchema = new mongoose.Schema(
     },
     endDate: {
       type: Date,
-      required: true,
     },
     ruleName: {
       type: String,
