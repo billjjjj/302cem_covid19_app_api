@@ -1,4 +1,5 @@
 const request = require('supertest');
+const dayjs = require('dayjs');
 const mongoose = require('../../database/test.mongodb.connect');
 const app = require('../../app');
 const CaseMoel = require('../../models/case.model');
@@ -10,10 +11,11 @@ const allCase = require('../mock-data/case/all-cases.json');
 const endpointUrl = '/cases/';
 const nonExistingCaseId = '5fe313b9c8acc928ceaee2ba';
 const testData = {
-  title: 'Make integration test for PUT',
-  description: 'description integration test',
+  caseNo: '222',
+  age: 30,
 };
 
+dayjs.locale('zh-hk');
 let firstCase;
 let newCaseId;
 let config;
@@ -41,8 +43,14 @@ describe(endpointUrl, () => {
     const response = await request(app).get(endpointUrl);
     expect(response.statusCode).toBe(200);
     expect(Array.isArray(response.body)).toBeTruthy();
-    expect(response.body[0].title).toBeDefined();
-    expect(response.body[0].description).toBeDefined();
+    expect(response.body[0].caseNo).toBeDefined();
+    expect(response.body[0].reportDate).toBeDefined();
+    expect(response.body[0].dateOfOnset).toBeDefined();
+    expect(response.body[0].gender).toBeDefined();
+    expect(response.body[0].status).toBeDefined();
+    expect(response.body[0].resident).toBeDefined();
+    expect(response.body[0].classification).toBeDefined();
+    expect(response.body[0].confirmed).toBeDefined();
     [firstCase] = response.body;
   });
 
@@ -64,8 +72,10 @@ describe(endpointUrl, () => {
       .set(config)
       .send(newCase);
     expect(response.statusCode).toBe(201);
-    expect(response.body.title).toBe(newCase.title);
-    expect(response.body.description).toBe(newCase.description);
+    expect(response.body.caseNo).toBe(newCase.caseNo);
+    expect(dayjs(response.body.reportDate).format('YYYY-MM-DD')).toBe(
+      dayjs(newCase.reportDate).format('YYYY-MM-DD')
+    );
     newCaseId = response.body._id;
   });
 
@@ -73,11 +83,10 @@ describe(endpointUrl, () => {
     const response = await request(app)
       .post(endpointUrl)
       .set(config)
-      .send({ title: 'Missing done property' });
+      .send({ ...newCase, caseNo: '' });
     expect(response.statusCode).toBe(500);
     expect(response.body).toStrictEqual({
-      message:
-        'Case validation failed: description: Path `description` is required.',
+      message: 'Case validation failed: caseNo: Path `caseNo` is required.',
     });
   });
 
@@ -87,8 +96,8 @@ describe(endpointUrl, () => {
       .set(config)
       .send(testData);
     expect(res.statusCode).toBe(200);
-    expect(res.body.title).toBe(testData.title);
-    expect(res.body.description).toBe(testData.description);
+    expect(res.body.caseNo).toBe(testData.caseNo);
+    expect(res.body.age).toBe(testData.age);
   });
 
   test('HTTP DELETE', async () => {
@@ -97,8 +106,7 @@ describe(endpointUrl, () => {
       .set(config)
       .send();
     expect(res.statusCode).toBe(200);
-    expect(res.body.title).toBe(testData.title);
-    expect(res.body.description).toBe(testData.description);
+    expect(res.body.caseNo).toBe(testData.caseNo);
   });
 
   test('HTTP DELETE 404', async () => {
