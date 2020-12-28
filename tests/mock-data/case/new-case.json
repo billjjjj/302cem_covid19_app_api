@@ -1,4 +1,11 @@
 {
-  "title": "Make first unit test",
-  "description": "mock description"
+  "caseNo": "1", 
+  "reportDate": "2020-01-23", 
+  "dateOfOnset": "2020-01-21", 
+  "gender": "M", 
+  "age": 39, 
+  "status": "Discharged",
+  "resident": "Non-HK resident",
+  "classification": "Imported case",
+  "confirmed": true
 }
