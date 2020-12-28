@@ -15,6 +15,7 @@ app.use('/login', require('./routes/auth.routes'));
 // Routes
 app.use('/cases', require('./routes/case.routes'));
 app.use('/users', require('./routes/user.routes'));
+app.use('/rules', require('./routes/rule.routes'));
 
 app.get('/', (req, res, next) => {
   res.send({ message: 'success test demo' });
