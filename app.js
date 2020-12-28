@@ -17,7 +17,7 @@ app.use('/cases', require('./routes/case.routes'));
 app.use('/users', require('./routes/user.routes'));
 
 app.get('/', (req, res, next) => {
-  res.send({ message: '/ message' });
+  res.send({ message: 'success test demo' });
   next();
 });
 
