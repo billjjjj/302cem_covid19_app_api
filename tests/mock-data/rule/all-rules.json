@@ -1,0 +1,14 @@
+[
+  {
+    "startDate": "2020-11-30",
+    "endDate": "2020-12-11",
+    "ruleName": "Mock Rule Name1",
+    "description": "Mock Description1"
+  },
+  {
+    "startDate": "2020-10-30",
+    "endDate": "2020-11-11",
+    "ruleName": "Mock Rule Name2",
+    "description": "Mock Description2"
+  }
+]
