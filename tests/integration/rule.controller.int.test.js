@@ -64,48 +64,49 @@ describe(endpointUrl, () => {
     expect(response.statusCode).toBe(404);
   });
 
-  // it(`POST ${endpointUrl}`, async () => {
-  //   const response = await request(app)
-  //     .post(endpointUrl)
-  //     .set(config)
-  //     .send(newRule);
-  //   expect(response.statusCode).toBe(201);
-  //   expect(response.body.ruleNo).toBe(newRule.ruleNo);
-  //   expect(dayjs(response.body.reportDate).format('YYYY-MM-DD')).toBe(
-  //     dayjs(newRule.reportDate).format('YYYY-MM-DD')
-  //   );
-  //   newRuleId = response.body._id;
-  // });
+  it(`POST ${endpointUrl}`, async () => {
+    const response = await request(app)
+      .post(endpointUrl)
+      .set(config)
+      .send(newRule);
+    expect(response.statusCode).toBe(201);
+    expect(response.body.ruleName).toBe(newRule.ruleName);
+    expect(response.body.description).toBe(newRule.description);
+    expect(dayjs(response.body.startDate).format('YYYY-MM-DD')).toBe(
+      dayjs(newRule.startDate).format('YYYY-MM-DD')
+    );
+    newRuleId = response.body._id;
+  });
 
-  // it(`should return error 500 on malformed data with POST ${endpointUrl}`, async () => {
-  //   const response = await request(app)
-  //     .post(endpointUrl)
-  //     .set(config)
-  //     .send({ ...newRule, ruleNo: '' });
-  //   expect(response.statusCode).toBe(500);
-  //   expect(response.body).toStrictEqual({
-  //     message: 'Rule validation failed: ruleNo: Path `ruleNo` is required.',
-  //   });
-  // });
+  it(`should return error 500 on malformed data with POST ${endpointUrl}`, async () => {
+    const response = await request(app)
+      .post(endpointUrl)
+      .set(config)
+      .send({ ...newRule, ruleName: '' });
+    expect(response.statusCode).toBe(500);
+    expect(response.body).toStrictEqual({
+      message: 'Rule validation failed: ruleName: Path `ruleName` is required.',
+    });
+  });
 
-  // it(`PUT ${endpointUrl}`, async () => {
-  //   const res = await request(app)
-  //     .put(endpointUrl + newRuleId)
-  //     .set(config)
-  //     .send(testData);
-  //   expect(res.statusCode).toBe(200);
-  //   expect(res.body.ruleNo).toBe(testData.ruleNo);
-  //   expect(res.body.age).toBe(testData.age);
-  // });
+  it(`PUT ${endpointUrl}`, async () => {
+    const res = await request(app)
+      .put(endpointUrl + newRuleId)
+      .set(config)
+      .send(testData);
+    expect(res.statusCode).toBe(200);
+    expect(res.body.ruleName).toBe(testData.ruleName);
+    expect(res.body.description).toBe(testData.description);
+  });
 
-  // test('HTTP DELETE', async () => {
-  //   const res = await request(app)
-  //     .delete(endpointUrl + newRuleId)
-  //     .set(config)
-  //     .send();
-  //   expect(res.statusCode).toBe(200);
-  //   expect(res.body.ruleNo).toBe(testData.ruleNo);
-  // });
+  test('HTTP DELETE', async () => {
+    const res = await request(app)
+      .delete(endpointUrl + newRuleId)
+      .set(config)
+      .send();
+    expect(res.statusCode).toBe(200);
+    expect(res.body.ruleName).toBe(testData.ruleName);
+  });
 
   test('HTTP DELETE 404', async () => {
     const res = await request(app)
