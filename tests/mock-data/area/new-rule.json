@@ -1,7 +1,6 @@
 {
-  "startDate": "2020-11-30",
-  "endDate": "2020-12-11",
-  "ruleName": "Mock Rule Name1",
-  "description": "Mock Description1"
+  "district": "Yuen Long",
+  "buildingName": "Heng Wan House, Tin Heng Estate",
+  "caseNo": "7545"
 }
 
