@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const HighRiskAreaSchema = new mongoose.Schema(
+const AreaSchema = new mongoose.Schema(
   {
     district: {
       type: String,
@@ -13,7 +13,12 @@ const HighRiskAreaSchema = new mongoose.Schema(
       required: true,
     },
     caseNo: {
-      type: String,
+      type: Number,
+      trim: true,
+      required: true,
+    },
+    lastDate: {
+      type: Date,
       trim: true,
       required: true,
     },
@@ -21,9 +26,9 @@ const HighRiskAreaSchema = new mongoose.Schema(
   { collection: 'areas' }
 );
 
-HighRiskAreaSchema.pre('save', (next) => {
+AreaSchema.pre('save', (next) => {
   this.createdDate = Date.now();
   next();
 });
 
-module.exports = mongoose.model('Area', HighRiskAreaSchema);
+module.exports = mongoose.model('Area', AreaSchema);
