@@ -2,6 +2,7 @@
   "startDate": "2020-11-30",
   "endDate": "2020-12-11",
   "ruleName": "Mock Rule Name1",
-  "description": "Mock Description1"
+  "description": "Mock Description1",
+  "imageUrl": "https://www.flaticon.com/svg/static/icons/svg/1159/1159873.svg"
 }
 

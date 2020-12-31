@@ -19,6 +19,11 @@ const RuleSchema = new mongoose.Schema(
       trim: true,
       required: true,
     },
+    imageUrl: {
+      type: String,
+      trim: true,
+      required: true,
+    },
   },
   { collection: 'rules' }
 );
