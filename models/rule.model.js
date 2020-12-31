@@ -23,9 +23,4 @@ const RuleSchema = new mongoose.Schema(
   { collection: 'rules' }
 );
 
-RuleSchema.pre('save', (next) => {
-  this.createdDate = Date.now();
-  next();
-});
-
 module.exports = mongoose.model('Rule', RuleSchema);

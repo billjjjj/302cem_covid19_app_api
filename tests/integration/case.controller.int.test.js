@@ -11,7 +11,7 @@ const allCase = require('../mock-data/case/all-cases.json');
 const endpointUrl = '/cases/';
 const nonExistingCaseId = '5fe313b9c8acc928ceaee2ba';
 const testData = {
-  caseNo: '222',
+  caseNo: 222,
   age: 30,
 };
 
@@ -71,12 +71,32 @@ describe(endpointUrl, () => {
       .post(endpointUrl)
       .set(config)
       .send(newCase);
+
     expect(response.statusCode).toBe(201);
     expect(response.body.caseNo).toBe(newCase.caseNo);
     expect(dayjs(response.body.reportDate).format('YYYY-MM-DD')).toBe(
       dayjs(newCase.reportDate).format('YYYY-MM-DD')
     );
     newCaseId = response.body._id;
+  });
+
+  it(`POST ${endpointUrl} and with duplicate  caseNo`, async () => {
+    const response = await request(app).post(endpointUrl).set(config).send({
+      caseNo: 3,
+      reportDate: '2020-01-23',
+      dateOfOnset: '2020-01-21',
+      gender: 'M',
+      age: 39,
+      status: 'Discharged',
+      resident: 'Non-HK resident',
+      classification: 'Imported case',
+      confirmed: true,
+    });
+    expect(response.statusCode).toBe(500);
+    expect(response.body).toStrictEqual({
+      message:
+        'Case validation failed: caseNo: Error, expected `caseNo` to be unique. Value: `3`',
+    });
   });
 
   it(`should return error 500 on malformed data with POST ${endpointUrl}`, async () => {
