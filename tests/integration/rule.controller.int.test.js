@@ -15,6 +15,7 @@ const testData = {
   endDate: '2030-11-11',
   ruleName: 'Mock Rule Name1',
   description: 'Mock Description1',
+  imageUrl: 'https://www.flaticon.com/svg/static/icons/svg/1159/1159873.svg',
 };
 
 dayjs.locale('zh-hk');
@@ -49,14 +50,18 @@ describe(endpointUrl, () => {
     expect(response.body[0].endDate).toBeDefined();
     expect(response.body[0].ruleName).toBeDefined();
     expect(response.body[0].description).toBeDefined();
+    expect(response.body[0].imageUrl).toBeDefined();
     [firstRule] = response.body;
   });
 
   test(`GET by Id ${endpointUrl} :ruleId`, async () => {
     const response = await request(app).get(endpointUrl + firstRule._id);
     expect(response.statusCode).toBe(200);
-    expect(response.body.title).toBe(firstRule.title);
-    expect(response.body.done).toBe(firstRule.done);
+    expect(response.body.startDate).toBe(firstRule.startDate);
+    expect(response.body.endDate).toBe(firstRule.endDate);
+    expect(response.body.ruleName).toBe(firstRule.ruleName);
+    expect(response.body.description).toBe(firstRule.description);
+    expect(response.body.imageUrl).toBe(firstRule.imageUrl);
   });
 
   test(`GET rule by id doesn't exist ${endpointUrl} ':ruleId'`, async () => {
@@ -75,6 +80,7 @@ describe(endpointUrl, () => {
     expect(dayjs(response.body.startDate).format('YYYY-MM-DD')).toBe(
       dayjs(newRule.startDate).format('YYYY-MM-DD')
     );
+    expect(response.body.imageUrl).toBe(newRule.imageUrl);
     newRuleId = response.body._id;
   });
 
@@ -97,6 +103,7 @@ describe(endpointUrl, () => {
     expect(res.statusCode).toBe(200);
     expect(res.body.ruleName).toBe(testData.ruleName);
     expect(res.body.description).toBe(testData.description);
+    expect(res.body.imageUrl).toBe(testData.imageUrl);
   });
 
   test('HTTP DELETE', async () => {
@@ -106,6 +113,8 @@ describe(endpointUrl, () => {
       .send();
     expect(res.statusCode).toBe(200);
     expect(res.body.ruleName).toBe(testData.ruleName);
+    expect(res.body.description).toBe(testData.description);
+    expect(res.body.imageUrl).toBe(testData.imageUrl);
   });
 
   test('HTTP DELETE 404', async () => {
