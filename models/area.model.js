@@ -26,9 +26,4 @@ const AreaSchema = new mongoose.Schema(
   { collection: 'areas' }
 );
 
-AreaSchema.pre('save', (next) => {
-  this.createdDate = Date.now();
-  next();
-});
-
 module.exports = mongoose.model('Area', AreaSchema);

@@ -1,6 +1,6 @@
 [
   {
-    "caseNo": "1", 
+    "caseNo": 1, 
     "reportDate": "2020-01-23", 
     "dateOfOnset": "2020-01-21", 
     "gender": "M", 
@@ -11,7 +11,7 @@
     "confirmed": true
   },
   {
-    "caseNo": "2", 
+    "caseNo": 2, 
     "reportDate": "2020-01-23", 
     "dateOfOnset": "2020-01-21", 
     "gender": "M", 

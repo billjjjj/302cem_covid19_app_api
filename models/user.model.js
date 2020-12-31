@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema(
   {
-    createdDate: {
-      type: Date,
-    },
     name: {
       type: String,
       trim: true,
@@ -29,10 +26,5 @@ const UserSchema = new mongoose.Schema(
   },
   { collection: 'users' }
 );
-
-UserSchema.pre('save', (next) => {
-  this.createdDate = Date.now();
-  next();
-});
 
 module.exports = mongoose.model('User', UserSchema);

@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const CaseSchema = new mongoose.Schema(
   {
-    createdDate: {
-      type: Date,
-    },
     caseNo: {
-      type: String,
+      type: Number,
       trim: true,
       required: true,
+      unique: true,
     },
     reportDate: {
       type: Date,
@@ -53,9 +52,6 @@ const CaseSchema = new mongoose.Schema(
   { collection: 'cases' }
 );
 
-CaseSchema.pre('save', (next) => {
-  this.createdDate = Date.now();
-  next();
-});
+CaseSchema.plugin(uniqueValidator);
 
 module.exports = mongoose.model('Case', CaseSchema);
