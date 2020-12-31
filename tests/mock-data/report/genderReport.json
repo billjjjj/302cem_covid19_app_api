@@ -1,10 +1,10 @@
 [
   {
-    "lable": "M",
-    "data": "65"
+    "lable": "Male",
+    "data": 123
   },
   {
-    "lable": "F",
-    "data": "35"
+    "lable": "Female",
+    "data": 456
   }
 ]

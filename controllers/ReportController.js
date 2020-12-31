@@ -7,23 +7,21 @@ class ReportController {
 
   async getGenderChart(req, res, next) {
     try {
-      // 呢到要 要mongodb d query 去做
-      const male = await this.model.findOne({ gender: 'M' });
-      const female = await this.model.findOne({ gender: 'F' });
-      const maleCount = male.count;
-      const femaleCount = female.count;
+      const maleCount = await this.model.countDocuments({ gender: 'M' });
+      const femaleCount = await this.model.countDocuments({ gender: 'F' });
 
-      if (male) {
-        res.status(200).json({ lable: male, data: maleCount });
-      } else {
-        res.status(404).json({ message: 'Male not found' });
-      }
+      const genderReport = [
+        {
+          lable: 'Male',
+          data: maleCount,
+        },
+        {
+          lable: 'Female',
+          data: femaleCount,
+        },
+      ];
 
-      if (female) {
-        res.status(200).json({ lable: female, data: femaleCount });
-      } else {
-        res.status(404).json({ message: 'Female not found' });
-      }
+      res.status(200).json(genderReport);
     } catch (err) {
       next(err);
     }
