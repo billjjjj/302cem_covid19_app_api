@@ -1,10 +1,10 @@
 [
   {
     "lable": "Non-HK resident",
-    "data": "65"
+    "data": 123
   },
   {
     "lable": "HK resident",
-    "data": "35"
+    "data": 123
   }
 ]

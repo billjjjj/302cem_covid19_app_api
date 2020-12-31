@@ -1,10 +1,10 @@
 [
   {
-    "lable": "true",
-    "data": "65"
+    "lable": true,
+    "data": 123
   },
   {
-    "lable": "false",
-    "data": "35"
+    "lable": false,
+    "data": 35
   }
 ]
