@@ -1,0 +1,47 @@
+[
+  {
+    "_id": "Hong Kong Island",
+    "data": [
+      {
+        "clinic": "Shaukeiwan Chest Clinic, Department of Health",
+        "address": "Shaukeiwan Chest Clinic 2/F, Shaukeiwan Jockey Club Polyclinic 8 Chai Wan Road, Hong Kong",
+        "phone": "2560 4522"
+      },
+      {
+        "clinic": "Sai Ying Pun Dermatological clinic, Department of Health",
+        "address": "3/F, Sai Ying Pun Jockey Club Polyclinic, 134 Queen's Road West, Sai Ying Pun",
+        "phone": "2859 8302"
+      }
+    ]
+  },
+  {
+    "_id": "Kowloon",
+    "data": [
+      {
+        "clinic": "East Kowloon Chest Clinic, Department of Health",
+        "address": "East Kowloon Chest Clinic East Kowloon Polyclinic 160 Hammer Hill Road, Kowloon",
+        "phone": "2352 0077"
+      },
+      {
+        "clinic": "Cheung Sha Wan Dermatological Clinic, Department of Health",
+        "address": "3/F, West Kowloon Health Centre, Cheung Sha Wan Government Offices, 303 Cheung Sha Wan Road, Sham Shui Po",
+        "phone": "2150 7373"
+      }
+    ]
+  },
+  {
+    "_id": "New Territories",
+    "data": [
+      {
+        "clinic": "South Kwai Chung Chest Clinic, Department of Health",
+        "address": "South Kwai Chung Chest Clinic 310, Kwai Shing Circuit South Kwai Chung, New Territories",
+        "phone": "2419 1721"
+      },
+      {
+        "clinic": "Yan Oi Chest Clinic, Department of Health",
+        "address": "Yan Oi Chest Clinic 6, Tuen Lee Street 2/F, Tuen Mun Yan Oi Polyclinic, New Territories",
+        "phone": "2404 3740"
+      }
+    ]
+  }
+]
