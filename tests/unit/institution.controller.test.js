@@ -84,6 +84,7 @@ describe('InstitutionController.getinstitutionGroup', () => {
   it('should have a getTodos function', () => {
     expect(typeof institutionController.getInstitutionGroup).toBe('function');
   });
+
   it('should call InstitutionModel.aggregate([{...}])', async () => {
     await institutionController.getInstitutionGroup(req, res, next);
     expect(InstitutionModel.aggregate).toHaveBeenCalledWith([
@@ -108,6 +109,7 @@ describe('InstitutionController.getinstitutionGroup', () => {
     expect(res._isEndCalled()).toBeTruthy();
     expect(res._getJSONData()).toStrictEqual(groupInstitutions);
   });
+
   it('should handle errors in getInstitutionGroup', async () => {
     const errorMessage = { message: 'Error finding' };
     const rejectedPromise = Promise.reject(errorMessage);
