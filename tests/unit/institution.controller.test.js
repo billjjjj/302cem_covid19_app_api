@@ -31,7 +31,7 @@ describe('InstitutionController.getAllEntities', () => {
     await institutionController.getAllEntities(req, res, next);
     expect(InstitutionModel.find).toHaveBeenCalledWith({});
   });
-  it('should return response with status 200 and all todos', async () => {
+  it('should return response with status 200 and all Institutions', async () => {
     InstitutionModel.find.mockReturnValue(allInstitutions);
     await institutionController.getAllEntities(req, res, next);
     expect(res.statusCode).toBe(200);
@@ -102,7 +102,7 @@ describe('InstitutionController.getinstitutionGroup', () => {
       },
     ]);
   });
-  it('should return response with status 200 and all todos', async () => {
+  it('should return response with status 200 and group Institutions', async () => {
     InstitutionModel.aggregate.mockReturnValue(groupInstitutions);
     await institutionController.getInstitutionGroup(req, res, next);
     expect(res.statusCode).toBe(200);
