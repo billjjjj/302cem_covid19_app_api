@@ -1,0 +1,14 @@
+[
+  {
+    "region": "Mock User Name1",
+    "clinic": "mock1Clinic",
+    "address": "HK",
+    "phone": "123456"
+  },
+  {
+    "region": "Mock User Name2",
+    "clinic": "mock2Clinic",
+    "address": "US",
+    "phone": "123456789"
+  }
+]
