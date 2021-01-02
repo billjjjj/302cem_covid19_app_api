@@ -5,10 +5,10 @@ const { authentication } = require('../middlewares');
 
 const institutionController = new Institution(InstitutionModel);
 
-router.get('/', authentication, (req, res, next) =>
+router.get('/', (req, res, next) =>
   institutionController.getAllEntities(req, res, next)
 );
-router.get('/group', authentication, (req, res, next) =>
+router.get('/group', (req, res, next) =>
   institutionController.getInstitutionGroup(req, res, next)
 );
 router.get('/:id', (req, res, next) =>
