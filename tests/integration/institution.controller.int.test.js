@@ -46,6 +46,7 @@ describe(endpointUrl, () => {
     const response = await request(app).get(endpointUrl);
     expect(response.statusCode).toBe(200);
     expect(Array.isArray(response.body)).toBeTruthy();
+    expect(response.body[0]._id).toBeDefined();
     expect(response.body[0].region).toBeDefined();
     expect(response.body[0].clinic).toBeDefined();
     expect(response.body[0].address).toBeDefined();
@@ -64,6 +65,7 @@ describe(endpointUrl, () => {
   test(`GET by Id ${endpointUrl} :institutionId`, async () => {
     const response = await request(app).get(endpointUrl + firstInstitution._id);
     expect(response.statusCode).toBe(200);
+    expect(response.body._id).toBe(firstInstitution._id);
     expect(response.body.region).toBe(firstInstitution.region);
     expect(response.body.clinic).toBe(firstInstitution.clinic);
     expect(response.body.address).toBe(firstInstitution.address);

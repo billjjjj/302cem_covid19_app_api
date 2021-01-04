@@ -93,6 +93,7 @@ describe('InstitutionController.getinstitutionGroup', () => {
           _id: '$region',
           data: {
             $push: {
+              _id: '$_id',
               clinic: '$clinic',
               address: '$address',
               phone: '$phone',
