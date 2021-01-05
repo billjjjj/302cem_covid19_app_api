@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Auth Route
 app.use('/login', require('./routes/auth.routes'));
+
 // Routes
 app.use('/cases', require('./routes/case.routes'));
 app.use('/users', require('./routes/user.routes'));
